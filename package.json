@@ -9,9 +9,12 @@
   "author": "Rafael Cipriano",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.14",
     "cz-conventional-changelog": "^3.3.0",
