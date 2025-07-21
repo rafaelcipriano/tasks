@@ -39,6 +39,38 @@ class UserController {
 
     return response.status(200).json(users)
   }
+
+  async update(request: Request, response: Response) {
+    const requestData = z.object({
+      name: z.string().optional(),
+      email: z.email().optional()
+    })
+
+    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+
+    const { name, email } = requestData.parse(request.body)
+
+    const user = await prisma.users.findFirst({ where: { id } })
+
+    if(!user) {
+      throw new AppError("User not found", 404)
+    }
+
+    if(email !== user.email) {
+      const emailIsAlreadyInUse = await prisma.users.findUnique({ where: { email } })
+
+      if(emailIsAlreadyInUse) throw new AppError("Email is already in use.")
+    }
+
+    return response.status(200).json(
+      await prisma.users.update({
+        data: {
+          name,
+          email,
+        }, where: { id }
+      })
+    )
+  }
 }
 
 export { UserController }
