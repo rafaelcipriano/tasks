@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { hash } from "bcrypt"
+import { hash, compare } from "bcrypt"
 import { prisma } from "@/database/prisma";
 import { AppError } from "@/utils/AppError";
 
@@ -70,6 +70,41 @@ class UserController {
         }, where: { id }
       })
     )
+  }
+
+  async updatePassword(request: Request, response: Response) {
+    const requestData = z.object({
+      old_password: z.string(),
+      new_password: z.string().min(6)
+    })
+
+    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    
+    const { old_password, new_password } = requestData.parse(request.body)
+    
+    if(!old_password || !new_password) {
+      throw new AppError("The old and new password must be provided.")
+    }
+    
+    const user = await prisma.users.findFirst({ where: { id }})
+
+    if(!user) {
+      throw new AppError("User not found", 404)
+    }
+
+    const passwordMatched = await compare(old_password, user.password)
+
+    const encryptedPassword = await hash(new_password, 8)
+
+    if(passwordMatched) {
+      await prisma.users.update({
+        data: {
+          password: encryptedPassword
+        }, where: { id }
+      })
+    } else throw new AppError("The password does not match.")
+    
+    return response.status(200).json({ message: "Password updated successfully."})
   }
 }
 
