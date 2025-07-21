@@ -106,6 +106,30 @@ class UserController {
     
     return response.status(200).json({ message: "Password updated successfully."})
   }
+
+  async delete(request: Request, response: Response) {
+    const requestData = z.object({
+      password: z.string()
+    })
+
+    const { password } = requestData.parse(request.body)
+
+    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+
+    if(!id) throw new AppError("User not found, please provide a valid ID.")
+
+    const user = await prisma.users.findFirst({ where: { id }})
+
+    if(!user) throw new AppError("User not found")
+
+    const passwordMatched = await compare(password, user.password)
+
+    if(passwordMatched) {
+      await prisma.users.delete({ where: { id }})
+    } else throw new AppError("Invalid password!")
+
+    return response.status(200).json(user)
+  }
 }
 
 export { UserController }
