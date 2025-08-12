@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { TeamsController } from "@/controllers/teams.controller";
+import { TeamsController } from "@controllers/teams.controller";
 
-import { ensureAuthenticated } from "@/middleware/ensureAuthenticated";
-import { verifyUserAuthentication } from "@/middleware/verifyUserAuthorization";
+import { ensureAuthenticated } from "@middleware/ensureAuthenticated";
+import { verifyUserAuthentication } from "@middleware/verifyUserAuthorization";
 
 const teamsRoutes = Router()
 const teamsController = new TeamsController()

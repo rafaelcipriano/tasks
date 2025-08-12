@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { TeamMembers } from "@/controllers/team_members.controller";
+import { TeamMembers } from "@controllers/team-members.controller";
 
-import { ensureAuthenticated } from "@/middleware/ensureAuthenticated";
-import { verifyUserAuthentication } from "@/middleware/verifyUserAuthorization";
+import { ensureAuthenticated } from "@middleware/ensureAuthenticated";
+import { verifyUserAuthentication } from "@middleware/verifyUserAuthorization";
 
 const teamMembersRoutes = Router()
 const teamMembersControllers = new TeamMembers()

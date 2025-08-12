@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
-import { prisma } from "@/database/prisma"
+import { prisma } from "@database/prisma"
 import { z } from "zod"
-import { AppError } from "@/utils/AppError"
+import { AppError } from "@utils/AppError"
 
 class TeamMembers {
   async create(request: Request, response: Response) {

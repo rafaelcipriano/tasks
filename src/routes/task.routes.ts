@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { TaskController } from "@/controllers/task.controller";
-import { verifyUserAuthentication } from "@/middleware/verifyUserAuthorization";
-import { ensureAuthenticated } from "@/middleware/ensureAuthenticated";
+import { TaskController } from "@controllers/task.controller";
+import { verifyUserAuthentication } from "@middleware/verifyUserAuthorization";
+import { ensureAuthenticated } from "@middleware/ensureAuthenticated";
 
 const taskRoutes = Router()
 const taskControllers = new TaskController()
