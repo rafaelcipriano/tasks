@@ -2,9 +2,12 @@
   "name": "tasks",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "module",
   "scripts": {
+    "start": "node --watch dist/server.js",
     "dev": "tsx --watch src/server.ts",
-    "commit": "cz"
+    "commit": "cz",
+    "build": "tsup src --out-dir dist"
   },
   "author": "Rafael Cipriano",
   "license": "ISC",
@@ -22,6 +25,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^24.0.14",
     "cz-conventional-changelog": "^3.3.0",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
