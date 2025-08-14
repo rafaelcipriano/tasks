@@ -33,7 +33,7 @@ class TeamsController {
       description: z.string().nonempty().optional()
     })
 
-    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    const { teamId } = z.object({ teamId: z.coerce.number() }).parse(request.params)
 
     const { name, description } = requestData.parse(request.body)
 
@@ -41,7 +41,7 @@ class TeamsController {
       data: {
         name,
         description
-      }, where: { id }
+      }, where: { id: teamId }
     })
 
 
@@ -49,10 +49,10 @@ class TeamsController {
   }
 
   async delete(request: Request, response: Response) {
-    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    const { teamId } = z.object({ teamId: z.coerce.number() }).parse(request.params)
 
     return response.status(200).json(
-      await prisma.teams.delete({ where: { id } })
+      await prisma.teams.delete({ where: { id: teamId } })
     )
   }
 }

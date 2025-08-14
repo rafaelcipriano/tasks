@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AppError } from "@/utils/AppError";
-import { prisma } from "@/database/prisma";
+import { AppError } from "@utils/AppError";
+import { prisma } from "@database/prisma";
 import { z } from "zod";
 
 class TaskController {
@@ -9,17 +9,17 @@ class TaskController {
       title: z.string().min(6),
       description: z.string().min(12),
       priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
-      assigned_to: z.number(),
-      team_id: z.number()
+      assignedTo: z.number(),
+      teamId: z.number()
     })
 
-    const { title, description, priority, assigned_to, team_id } = requestData.parse(request.body)
+    const { title, description, priority, assignedTo, teamId } = requestData.parse(request.body)
 
-    const member = await prisma.users.findUnique({ where: { id: assigned_to } })
+    const member = await prisma.users.findUnique({ where: { id: assignedTo } })
 
     if(!member) throw new AppError("Member not found!", 404)
 
-    const team = await prisma.teams.findUnique({ where: { id: team_id } })
+    const team = await prisma.teams.findUnique({ where: { id: teamId } })
 
     if(!team) throw new AppError("Team not found", 404)
 
@@ -28,8 +28,16 @@ class TaskController {
         title,
         description,
         priority,
-        assignedTo: assigned_to,
-        teamId: team_id
+        assignedTo,
+        teamId
+      }
+    })
+
+    await prisma.taskLogs.create({
+      data: {
+        taskId: task.id,
+        changedBy: assignedTo,
+        oldStatus: task.status,
       }
     })
 
@@ -45,9 +53,9 @@ class TaskController {
   }
 
   async show(request: Request, response: Response) {
-    const { task_id } = z.object({ task_id: z.coerce.number() }).parse(request.params)
+    const { taskId } = z.object({ taskId: z.coerce.number() }).parse(request.params)
 
-    const task = await prisma.tasks.findUnique({ where: { id: task_id } })
+    const task = await prisma.tasks.findUnique({ where: { id: taskId } })
 
     if(!task) throw new AppError("Task not found!", 404)
     
@@ -55,41 +63,55 @@ class TaskController {
   }
 
   async updateStatus(request: Request, response: Response) {
-    const { task_id } = z.object({ task_id: z.coerce.number() }).parse(request.params)
-
-    const requestData = z.object({
-      newStatus: z.enum(["in_progress", "completed"])
-    })
-    
-    const task = await prisma.tasks.findUnique({ where: { id: task_id } })
-
-    if(!task) throw new AppError("Task not found!", 404)
-
+    const requestData = z.object({ newStatus: z.enum(["pending", "in_progress", "completed"]) })
+    const { taskId } = z.object({ taskId: z.coerce.number() }).parse(request.params)
+    const { memberId } = z.object({ memberId: z.coerce.number() }).parse(request.query)
     const { newStatus } = requestData.parse(request.body)
-      
+    const task = await prisma.tasks.findUnique({ where: { id: taskId } })
+    const member = await prisma.users.findUnique({ where: { id: memberId } })
+
+    if(!task) 
+      throw new AppError("Task not found!", 404)
+
+    if(!member) 
+      throw new AppError("User not found", 404)
+
+    if(task.assignedTo !== memberId)
+      throw new AppError("Another member cannot update the status of a task that has not been assigned to them.")
+
     if(task.status === newStatus)
       throw new AppError("The task already has this status!")
-      
-    const taskUpdated = await prisma.tasks.update({
+    
+    const logUpdated = prisma.taskLogs.updateMany({
       data: {
-        status: newStatus
-      }, where: { id: task_id }
+        oldStatus: task.status,
+        newStatus
+      }, where: { taskId: task.id }
     })
 
-    return response.status(200).json(taskUpdated)
+    const taskUpdated = prisma.tasks.update({
+      data: {
+        status: newStatus
+      }, where: { id: taskId }
+    })
+
+    const transaction = await prisma.$transaction([logUpdated, taskUpdated])
+    return response.status(200).json(transaction)
   }
 
   async delete(request: Request, response: Response) {
-    const { task_id } = z.object({ task_id: z.coerce.number() }).parse(request.params)
+    const { taskId } = z.object({ taskId: z.coerce.number() }).parse(request.params)
 
-    const task = await prisma.tasks.findUnique({ where: { id: task_id } })
+    const task = await prisma.tasks.findUnique({ where: { id: taskId } })
 
-    if(!task) 
+    if(!task)
       throw new AppError("Task not found", 404)
     else {
-      return response.status(200).json(
-        await prisma.tasks.delete({ where: { id: task_id } })
-      )
+      const deleteLog = prisma.taskLogs.deleteMany({ where: { taskId: task.id } })
+      const deleteTask = prisma.tasks.delete({ where: { id: taskId } })
+
+      const transaction = await prisma.$transaction([deleteLog, deleteTask])
+      return response.status(200).json(transaction)
     }
 
   }

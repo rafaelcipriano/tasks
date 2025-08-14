@@ -6,8 +6,8 @@ const userController = new UserController()
 
 userRoutes.post("/", userController.create)
 userRoutes.get("/", userController.index)
-userRoutes.patch("/:id", userController.update)
-userRoutes.put("/:id/password", userController.updatePassword)
-userRoutes.delete("/:id", userController.delete)
+userRoutes.patch("/:userId", userController.update)
+userRoutes.put("/:userId/update-password", userController.updatePassword)
+userRoutes.delete("/:userId", userController.delete)
 
 export { userRoutes }

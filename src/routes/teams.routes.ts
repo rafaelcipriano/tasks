@@ -10,7 +10,7 @@ const teamsController = new TeamsController()
 teamsRoutes.use(ensureAuthenticated, verifyUserAuthentication(["ADMIN"]))
 teamsRoutes.post("/", teamsController.create)
 teamsRoutes.get("/", teamsController.index)
-teamsRoutes.patch("/:id", teamsController.update)
-teamsRoutes.delete("/:id", teamsController.delete)
+teamsRoutes.patch("/:teamId", teamsController.update)
+teamsRoutes.delete("/:teamId", teamsController.delete)
 
 export { teamsRoutes }

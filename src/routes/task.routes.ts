@@ -10,8 +10,8 @@ taskRoutes.use(ensureAuthenticated)
 
 taskRoutes.post("/",verifyUserAuthentication(["ADMIN"]), taskControllers.create)
 taskRoutes.get("/", verifyUserAuthentication(["ADMIN","MEMBER"]), taskControllers.index)
-taskRoutes.get("/:task_id", verifyUserAuthentication(["ADMIN","MEMBER"]),taskControllers.show)
-taskRoutes.put("/:task_id", verifyUserAuthentication(["ADMIN", "MEMBER"]), taskControllers.updateStatus)
-taskRoutes.delete("/:task_id", verifyUserAuthentication(["ADMIN",]), taskControllers.delete)
+taskRoutes.get("/:taskId", verifyUserAuthentication(["ADMIN","MEMBER"]),taskControllers.show)
+taskRoutes.put("/:taskId", verifyUserAuthentication(["ADMIN", "MEMBER"]), taskControllers.updateStatus)
+taskRoutes.delete("/:taskId", verifyUserAuthentication(["ADMIN",]), taskControllers.delete)
 
 export { taskRoutes }

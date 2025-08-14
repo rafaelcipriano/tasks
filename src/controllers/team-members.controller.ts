@@ -5,7 +5,7 @@ import { AppError } from "@utils/AppError"
 
 class TeamMembers {
   async create(request: Request, response: Response) {
-    const { team_id } = z.object({ team_id: z.coerce.number() }).parse(request.params)
+    const { teamId } = z.object({ teamId: z.coerce.number() }).parse(request.params)
 
     const { memberId } = z.object({ memberId: z.coerce.number() }).parse(request.query)
 
@@ -13,14 +13,14 @@ class TeamMembers {
 
     if(!checkIfUserExists) throw new AppError("User not found!", 404)
 
-    const checkIfTeamExists = await prisma.teams.findFirst({ where: { id: team_id } })
+    const checkIfTeamExists = await prisma.teams.findFirst({ where: { id: teamId } })
 
     if(!checkIfTeamExists) throw new AppError("Team not found!", 404)
 
     await prisma.teamMembers.create({
       data: {
         userId: memberId,
-        teamId: team_id
+        teamId
       }
     })
 
@@ -28,9 +28,9 @@ class TeamMembers {
   }
 
   async show(request: Request, response: Response) {
-    const { team_id } = z.object({ team_id: z.coerce.number() }).parse(request.params)
+    const { teamId } = z.object({ teamId: z.coerce.number() }).parse(request.params)
 
-    const team = await prisma.teams.findUnique({ where: { id: team_id } })
+    const team = await prisma.teams.findUnique({ where: { id: teamId } })
 
     if(!team) throw new AppError("Team not found!")
 
@@ -49,7 +49,7 @@ class TeamMembers {
     return response.status(200).json({ team, members: membersWithoutPassword })
   }
 
-  async removeMember(request: Request, response: Response) {
+  async deleteMember(request: Request, response: Response) {
     const { memberId } = z.object({ memberId: z.coerce.number() }).parse(request.query)
 
     await prisma.teamMembers.deleteMany({ where: { userId: memberId } })
@@ -57,11 +57,11 @@ class TeamMembers {
     return response.status(200).json()
   }
 
-  async delete(request: Request, response: Response) {
-    const { team_id } = z.object({ team_id: z.coerce.number() }).parse(request.params)
+  async deleteTeam(request: Request, response: Response) {
+    const { teamId } = z.object({ teamId: z.coerce.number() }).parse(request.params)
 
     try {
-      const team = await prisma.teamMembers.deleteMany({ where: { teamId: team_id } })
+      const team = await prisma.teamMembers.deleteMany({ where: { teamId: teamId } })
       return response.status(200).json(team)
     } catch (error) {
       return error

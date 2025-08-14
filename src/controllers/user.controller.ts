@@ -10,7 +10,7 @@ class UserController {
       name: z.string().trim().min(3),
       email: z.email(),
       password: z.string().min(6)
-    }).catchall(z.string())
+    })
 
     const { name, email, password } = requestData.parse(request.body)
 
@@ -46,11 +46,11 @@ class UserController {
       email: z.email().optional()
     })
 
-    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    const { userId } = z.object({ userId: z.coerce.number() }).parse(request.params)
 
     const { name, email } = requestData.parse(request.body)
 
-    const user = await prisma.users.findFirst({ where: { id } })
+    const user = await prisma.users.findFirst({ where: { id: userId } })
 
     if(!user) {
       throw new AppError("User not found", 404)
@@ -67,7 +67,7 @@ class UserController {
         data: {
           name,
           email,
-        }, where: { id }
+        }, where: { id: userId }
       })
     )
   }
@@ -78,7 +78,7 @@ class UserController {
       new_password: z.string().min(6)
     })
 
-    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    const { userId } = z.object({ userId: z.coerce.number() }).parse(request.params)
     
     const { old_password, new_password } = requestData.parse(request.body)
     
@@ -86,7 +86,7 @@ class UserController {
       throw new AppError("The old and new password must be provided.")
     }
     
-    const user = await prisma.users.findFirst({ where: { id }})
+    const user = await prisma.users.findFirst({ where: { id: userId }})
 
     if(!user) {
       throw new AppError("User not found", 404)
@@ -100,7 +100,7 @@ class UserController {
       await prisma.users.update({
         data: {
           password: encryptedPassword
-        }, where: { id }
+        }, where: { id: userId }
       })
     } else throw new AppError("The password does not match.")
     
@@ -114,18 +114,18 @@ class UserController {
 
     const { password } = requestData.parse(request.body)
 
-    const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
+    const { userId } = z.object({ userId: z.coerce.number() }).parse(request.params)
 
-    if(!id) throw new AppError("User not found, please provide a valid ID.")
+    if(!userId) throw new AppError("User not found, please provide a valid ID.")
 
-    const user = await prisma.users.findFirst({ where: { id }})
+    const user = await prisma.users.findFirst({ where: { id: userId }})
 
     if(!user) throw new AppError("User not found")
 
     const passwordMatched = await compare(password, user.password)
 
     if(passwordMatched) {
-      await prisma.users.delete({ where: { id }})
+      await prisma.users.delete({ where: { id: userId }})
     } else throw new AppError("Invalid password!")
 
     return response.status(200).json(user)
