@@ -35,7 +35,7 @@ model Users {
 
   users      TeamMembers[]
   assigned   Tasks[]
-  changed    TaskHistory[]
+  changed    TaskLogs[]
 
   @@map("users")
 }
@@ -79,7 +79,7 @@ model Tasks {
   assigned     Users @relation(fields: [assignedTo], references: [id])
   team         Teams @relation(fields: [teamId], references: [id])
 
-  history      TaskHistory[]
+  history      TaskLogs[]
 
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime? @updatedAt() @map("updated_at")
@@ -87,7 +87,7 @@ model Tasks {
   @@map("tasks")
 }
 
-model TaskHistory {
+model TaskLogs {
   id        Int @id @default(autoincrement())
 
   taskId    Int
@@ -101,5 +101,5 @@ model TaskHistory {
 
   changedAt DateTime @default(now()) @map("changed_at")
 
-  @@map("task_history")
+  @@map("task_logs")
 }
