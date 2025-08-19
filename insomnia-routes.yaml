@@ -1,0 +1,636 @@
+type: collection.insomnia.rest/5.0
+name: Task Manager
+meta:
+  id: wrk_835e0ac0706746c08f70293617fe81f3
+  created: 1752442675825
+  modified: 1752442675825
+collection:
+  - name: Users
+    meta:
+      id: fld_ef4d9551584f4b2c9c8dedde89f52bf8
+      created: 1752442756279
+      modified: 1753135186236
+      sortKey: -1752442756279
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_71e0411c299b415cadbf9d86ae15a678
+          created: 1752442758657
+          modified: 1755548331088
+          isPrivate: false
+          sortKey: -1752442758657
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Pogian",
+            	"email": "pogian@example.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_18fd7bddfb864f3ab9196394a1977046
+          created: 1752948314661
+          modified: 1752948363997
+          isPrivate: false
+          sortKey: -1752948314661
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/userId"
+        name: Update
+        meta:
+          id: req_0c1b3afa1c384c0d9bae659387cf8c65
+          created: 1752948705337
+          modified: 1755561835704
+          isPrivate: false
+          sortKey: -1752948705337
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Breno",
+            	"email": "breno@example.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/userId/update-password"
+        name: Update Password
+        meta:
+          id: req_0ad390749c9448cc8cf661e6e20440cd
+          created: 1753055630571
+          modified: 1755195510687
+          isPrivate: false
+          sortKey: -1752948705437
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"old_password": "123456",
+            	"new_password": "654321"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/userId"
+        name: Delete
+        meta:
+          id: req_5274812b1fae415a960e027a2b11e511
+          created: 1753059924158
+          modified: 1755195518026
+          isPrivate: false
+          sortKey: -1753059924158
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: user
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Session Controller
+    meta:
+      id: fld_7681e469bce34de38ec9ac0642309f2b
+      created: 1753135104280
+      modified: 1753135206249
+      sortKey: -1753135104280
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_8c40ff7401a0454ea6fcdd8d6c47f8a0
+          created: 1753135108207
+          modified: 1755043069552
+          isPrivate: false
+          sortKey: -1753135108207
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "rafael@example.com",
+            	"password": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: session
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Teams
+    meta:
+      id: fld_b5390528c024451d9a951cd33b4baa1c
+      created: 1753564209002
+      modified: 1753564249397
+      sortKey: -1753564209002
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_54dcf9d05c894a71aae5298b512103a2
+          created: 1753564215333
+          modified: 1755197961275
+          isPrivate: false
+          sortKey: -1753564215333
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            	"name": "Alpha",
+            	"description": "Departamento de pessoal da 1ª Companhia de Polícia do Exército"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId"
+        name: Delete
+        meta:
+          id: req_6941ec1ef467410aa1b27a48ee7c8f30
+          created: 1753564220609
+          modified: 1755195472202
+          isPrivate: false
+          sortKey: -1753564220609
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_3be2ef246e5e4c8680e90c4cbea8c240
+          created: 1753565408112
+          modified: 1753568551439
+          isPrivate: false
+          sortKey: -1753565408112
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId"
+        name: Update
+        meta:
+          id: req_1761b212dae84d518e40b8a1ba2a4fa7
+          created: 1753565435297
+          modified: 1755561815618
+          isPrivate: false
+          sortKey: -1753565435297
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            	"description": "Recursos humanos da 1ª Companhia de Polícia do Exército"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: teams
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Team Members
+    meta:
+      id: fld_10caa0a0ce1c456da4b6bf855937d24c
+      created: 1754152590952
+      modified: 1754152634013
+      sortKey: -1754152590952
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId?memberId=memberId"
+        name: Add Members
+        meta:
+          id: req_0732f753e27e45d097fc4098b8888a75
+          created: 1754152594097
+          modified: 1755561808899
+          isPrivate: false
+          sortKey: -1754152594098
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId"
+        name: Show Members
+        meta:
+          id: req_ecb4fb14653043248ec87167b44ae6de
+          created: 1754299505934
+          modified: 1755561784902
+          isPrivate: false
+          sortKey: -1754299505934
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId/delete-member?memberId=2"
+        name: Delete Member
+        meta:
+          id: req_6c4eceea11b047edbbd49a64c0284733
+          created: 1754343820951
+          modified: 1755561777945
+          isPrivate: false
+          sortKey: -1754343820951
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/teamId/delete-all-members"
+        name: Delete All Members
+        meta:
+          id: req_e94048cd17ba4930ac6993fbcf402f8c
+          created: 1754343828927
+          modified: 1755561770113
+          isPrivate: false
+          sortKey: -1754343828927
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: team-members
+  - name: Tasks
+    meta:
+      id: fld_47aae55542aa40fea6dd19dd4a3db7e8
+      created: 1754431261487
+      modified: 1754431337673
+      sortKey: -1754431261487
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_4617cf46b83f466f94842bfcdcf1443e
+          created: 1754431264468
+          modified: 1755561756664
+          isPrivate: false
+          sortKey: -1754431264468
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            	"title": "Arquivar a documentação do escritório",
+            	"description": "Separar a documentação do departamento em ordem alfabética e arquivar.",
+            	"priority": "HIGH",
+            	"assignedTo": 2,
+            	"teamId": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_1dbc827caae945898b4d297c9c1a9726
+          created: 1754431267381
+          modified: 1754504915797
+          isPrivate: false
+          sortKey: -1754431267381
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/taskId?memberId=memberId"
+        name: Update Status
+        meta:
+          id: req_351999928b7345529cd2be4997da89d5
+          created: 1754431268568
+          modified: 1755561351189
+          isPrivate: false
+          sortKey: -1754431268568
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"newStatus": "completed"
+            }
+        parameters:
+          - id: pair_6650001e32c94b419e374aedb8ecc405
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/taskId"
+        name: Delete
+        meta:
+          id: req_6a5ed1db85d44f23a7cbb43bc3a25abe
+          created: 1754431270261
+          modified: 1755196028489
+          isPrivate: false
+          sortKey: -1754431270261
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/taskId"
+        name: Show
+        meta:
+          id: req_abd97cc8630845b7bdbcc9461567dde3
+          created: 1754432173433
+          modified: 1755196010104
+          isPrivate: false
+          sortKey: -1754431267974.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_8c40ff7401a0454ea6fcdd8d6c47f8a0',
+            'b64::JC50b2tlbg==::46b', 'always', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: tasks
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: TaskLogs
+    meta:
+      id: fld_255981916f974ac39211f86b9a72eb6f
+      created: 1754856118806
+      modified: 1754869843487
+      sortKey: -1754856118806
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/taskId"
+        name: Show
+        meta:
+          id: req_bc17f1f19af64a359fa84444eb0836e1
+          created: 1754856527975
+          modified: 1755196101288
+          isPrivate: false
+          sortKey: -1754856527975
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: task-logs
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_2986d62e57965cc88f369339a6a181d4aef1d0d5
+    created: 1752442675833
+    modified: 1752442675833
+environments:
+  name: Base Environment
+  meta:
+    id: env_2986d62e57965cc88f369339a6a181d4aef1d0d5
+    created: 1752442675830
+    modified: 1752442706310
+    isPrivate: false
+  data:
+    BASE_URL: http://localhost:3333
+  subEnvironments:
+    - name: dev
+      meta:
+        id: env_04a577473127423487d07cc24fe3badd
+        created: 1752442719307
+        modified: 1752794750404
+        isPrivate: false
+        sortKey: 1752442719307
+      data:
+        BASE_URL: http://localhost:3000
+      color: "#00ff00"
