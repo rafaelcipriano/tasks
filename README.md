@@ -3,7 +3,7 @@
 
 Uma API para um sistema Gerenciador de tarefas, onde os usuários podem criar contas, autenticar-se e gerenciar tarefas. As tarefas podem ser atribuídas a membros do time, categorizadas por status e prioridade, e acompanhadas.
 
-[!Esquema do banco de dados](api-schema.png)
+![Esquema do banco de dados](api-schema.png)
 
 ### Como inicializar a api
 
